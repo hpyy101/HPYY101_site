@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohamed | Gamer & Content Creator</title>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts: Orbitron & Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================
+       CSS VARIABLES & GLOBAL STYLES
+       ========================================== */
+    :root {
+      --bg-dark: #07070a;
+      --bg-card: rgba(18, 18, 26, 0.75);
+      --bg-card-hover: rgba(28, 28, 40, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      
+      --accent-blue: #00f0ff;
+      --accent-purple: #7000ff;
+      
+      --glow-blue: rgba(0, 240, 255, 0.4);
+      --glow-purple: rgba(112, 0, 255, 0.4);
+      
+      --text-main: #f0f0f5;
+      --text-muted: #a0a0b8;
+      
+      --font-heading: 'Orbitron', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Animated Background Grid & Glows */
+    .ambient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(7, 7, 10, 0.8) 0%, #07070a 100%);
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    /* Typography */
+    h1, h2, h3, .brand {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20%;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--glow-blue);
+    }
+
+    /* Glow Text Utility */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--glow-purple), 0 0 15px var(--glow-blue);
+    }
+
+    .btn-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 1.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-icon:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--glow-blue);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* ==========================================
+       NAVIGATION BAR
+       ========================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(7, 7, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 75px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--accent-blue);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--accent-blue);
+      transition: var(--transition);
+      box-shadow: 0 0 8px var(--glow-blue);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Mobile Nav Menu Toggle */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================
+       HERO SECTION
+       ========================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-bio {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      max-width: 500px;
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    /* Hero Avatar */
+    .hero-avatar-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      padding: 8px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      box-shadow: 0 0 30px var(--glow-purple), 0 0 50px var(--glow-blue);
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 25px var(--glow-purple), 0 0 40px var(--glow-blue);
+      }
+      100% {
+        box-shadow: 0 0 40px var(--glow-purple), 0 0 65px var(--glow-blue);
+      }
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      background-color: #12121a;
+    }
+
+    /* ==========================================
+       ABOUT ME SECTION
+       ========================================== */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    }
+
+    .about-text {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      line-height: 1.8;
+    }
+
+    /* ==========================================
+       GAMES I PLAY SECTION
+       ========================================== */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px var(--glow-blue);
+    }
+
+    .game-img-wrapper {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .game-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .game-card:hover .game-img {
+      transform: scale(1.08);
+    }
+
+    .game-info {
+      padding: 24px;
+    }
+
+    .game-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .game-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================
+       FIND ME ONLINE SECTION
+       ========================================== */
+    .socials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .social-btn i {
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-5px);
+      background: var(--bg-card-hover);
+    }
+
+    /* Specific Social Hover Colors */
+    .social-btn.tiktok:hover { border-color: #ff0050; color: #ff0050; box-shadow: 0 0 20px rgba(255, 0, 80, 0.3); }
+    .social-btn.instagram:hover { border-color: #e1306c; color: #e1306c; box-shadow: 0 0 20px rgba(225, 48, 108, 0.3); }
+    .social-btn.youtube:hover { border-color: #ff0000; color: #ff0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+    .social-btn.discord:hover { border-color: #5865f2; color: #5865f2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.3); }
+    .social-btn.steam:hover { border-color: #00adee; color: #00adee; box-shadow: 0 0 20px rgba(0, 173, 238, 0.3); }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      background: rgba(7, 7, 10, 0.95);
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    /* ==========================================
+       SCROLL ANIMATIONS (Reveal Effects)
+       ========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================
+       RESPONSIVE DESIGN
+       ========================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+
+      .hero-bio {
+        max-width: 100%;
+      }
+
+      .avatar-wrapper {
+        width: 260px;
+        height: 260px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 75px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 75px);
+        background: rgba(7, 7, 10, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: var(--transition);
+      }
+
+      .nav-links.open {
+        left: 0;
+      }
+
+      .nav-link {
+        font-size: 1.2rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .socials-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Canvas/Overlay -->
+  <div class="ambient-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="brand">MOHAMED<span class="gradient-text">.</span></a>
+      <div class="menu-toggle" id="mobile-menu">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="nav-list">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About Me</a></li>
+        <li><a href="#games" class="nav-link">Games</a></li>
+        <li><a href="#socials" class="nav-link">Socials</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content reveal active">
+        <h1>MOHAMED</h1>
+        <div class="hero-subtitle gradient-text">Gamer | Content Creator | Gaming Enthusiast</div>
+        <p class="hero-bio">
+          Hey! I'm Mohamed. I'm a gaming enthusiast who loves competitive games, playing with friends, and discovering new games.
+        </p>
+        
+        <!-- Social Media Buttons -->
+        <div class="hero-socials">
+          <a class="btn btn-icon link-tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a class="btn btn-icon link-instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a class="btn btn-icon link-youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+          <a class="btn btn-icon link-discord" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <i class="fa-brands fa-discord"></i>
+          </a>
+        </div>
+
+        <a href="#games" class="btn btn-primary">
+          Explore Games <i class="fa-solid fa-gamepad"></i>
+        </a>
+      </div>
+
+      <div class="hero-avatar-container reveal active">
+        <div class="avatar-wrapper">
+          <!-- Gaming Avatar / Profile Image -->
+          <img src="mohamed-gamer.jpg" alt="Mohamed Gaming Avatar" class="avatar-img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME SECTION -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title reveal active">About Me</h2>
+      <div class="about-card reveal active">
+        <p class="about-text">
+          I'm Mohamed, a gaming enthusiast and content creator. I enjoy competitive games, multiplayer games, and spending time gaming with friends.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES I PLAY SECTION -->
+  <section id="games">
+    <div class="container">
+      <h2 class="section-title reveal active">Games I Play</h2>
+      <div class="games-grid">
+
+        <!-- CS2 -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://prod.assets.earlygamecdn.com/images/cs2_2023-05-04-123423_kxsc.png?transform=Banner+Webp" alt="Counter-Strike 2" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">Counter-Strike 2</h3>
+            <p class="game-desc">Tactical 5v5 shooter focusing on precise aiming, strategy, and team communication.</p>
+          </div>
+        </div>
+
+        <!-- Fortnite -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://techraptor.net/sites/default/files/2023-01/fortnite%20%281%29.jpg" alt="Fortnite" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">Fortnite</h3>
+            <p class="game-desc">Fast-paced battle royale featuring building mechanics, squad play, and non-stop action.</p>
+          </div>
+        </div>
+
+        <!-- EA SPORTS FC -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://gamefaqs.gamespot.com/a/box/6/9/9/1152699_front.jpg" alt="EA SPORTS FC" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">EA SPORTS FC</h3>
+            <p class="game-desc">Competitive football simulator. Loved for Ultimate Team and head-to-head matches.</p>
+          </div>
+        </div>
+
+        <!-- GTA V / FiveM -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://www.adslzone.net/app/uploads-adslzone.net/2015/04/apertura-comprar-gta-v.jpg" alt="GTA V / FiveM" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">GTA V / FiveM</h3>
+            <p class="game-desc">Open-world sandbox action and customized roleplay servers with friends.</p>
+          </div>
+        </div>
+
+        <!-- Forza Horizon 5 -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://www.gamespot.com/a/uploads/original/1179/11799911/3882090-forzahorizon5_keyart_primary_extended-horiz_rgb_final.jpg" alt="Forza Horizon 5" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">Forza Horizon 5</h3>
+            <p class="game-desc">Open-world racing through vibrant landscapes with hundreds of high-performance cars.</p>
+          </div>
+        </div>
+
+        <!-- ARK: Survival Evolved -->
+        <div class="game-card reveal active">
+          <div class="game-img-wrapper">
+            <img src="https://www.chaynikam.info/prevgame/ARK_Survival_Evolved-ver.webp" alt="ARK: Survival Evolved" class="game-img" />
+          </div>
+          <div class="game-info">
+            <h3 class="game-title">ARK: Survival Evolved</h3>
+            <p class="game-desc">Action-adventure survival game filled with primeval creatures, base-building, and tribe wars.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIALS SECTION -->
+  <section id="socials">
+    <div class="container">
+      <h2 class="section-title reveal active">Find Me Online</h2>
+      <div class="socials-grid">
+        <a href="#" class="social-btn tiktok reveal active"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+        <a href="#" class="social-btn instagram reveal active"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        <a href="#" class="social-btn youtube reveal active"><i class="fa-brands fa-youtube"></i> YouTube</a>
+        <a href="#" class="social-btn discord reveal active"><i class="fa-brands fa-discord"></i> Discord</a>
+        <a href="#" class="social-btn steam reveal active"><i class="fa-brands fa-steam"></i> Steam</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">&copy; Mohamed. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
